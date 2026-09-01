@@ -1,0 +1,115 @@
+/*
+const Footer = () => {
+  // ... your existing state and logic ...
+
+  const quickActions = [
+    { label: "📞 Call 112", action: "tel:112", type: "phone" },
+    { label: "🚨 NAPTIP Help", action: "tel:08002255627847", type: "phone" },
+    { label: "🛡️ Safety Tips", action: "Give me immediate digital privacy safety tips.", type: "chat" }
+  ];
+
+  const handleAction = (item: typeof quickActions[0]) => {
+    if (item.type === "phone") {
+      window.open(item.action);
+    } else {
+      setPrompt(item.action);
+    }
+  };
+
+  return (
+    <div className="fixed bottom-0 w-[90%] md:w-[80%] m-auto pb-4 bg-gradient-to-t from-black via-black to-transparent">
+      
+       //Quick Action Buttons 
+      <div className="flex gap-2 mb-3 overflow-x-auto no-scrollbar">
+        {quickActions.map((item, index) => (
+          <button
+            key={index}
+            onClick={() => handleAction(item)}
+            className="whitespace-nowrap px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/80 hover:bg-white/10 hover:border-white/30 transition-all"
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      <form onSubmit={(e) => { e.preventDefault(); main(); }}>
+        // ... your existing textarea and buttons ... 
+      </form>
+    </div>
+  );
+}*/
+
+.loader {
+ position: relative;
+ width: 2.5em;
+ height: 2.5em;
+ transform: rotate(165deg);
+}
+
+.loader:before, .loader:after {
+ content: "";
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ display: block;
+ width: 0.5em;
+ height: 0.5em;
+ border-radius: 0.25em;
+ transform: translate(-50%, -50%);
+}
+
+.loader:before {
+ animation: before8 2s infinite;
+}
+
+.loader:after {
+ animation: after6 2s infinite;
+}
+
+@keyframes before8 {
+ 0% {
+  width: 0.5em;
+  box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+ }
+
+ 35% {
+  width: 2.5em;
+  box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
+ }
+
+ 70% {
+  width: 0.5em;
+  box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
+ }
+
+ 100% {
+  box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+ }
+}
+
+@keyframes after6 {
+ 0% {
+  height: 0.5em;
+  box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+ }
+
+ 35% {
+  height: 2.5em;
+  box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+ }
+
+ 70% {
+  height: 0.5em;
+  box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
+ }
+
+ 100% {
+  box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+ }
+}
+
+.loader {
+ position: absolute;
+ top: calc(50% - 1.25em);
+ left: calc(50% - 1.25em);
+}

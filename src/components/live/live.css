@@ -1,0 +1,76 @@
+.live-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #000000;
+}
+
+.live-caption {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+  max-width: 32rem;
+  margin: 0 auto;
+  text-align: center;
+  padding: 1.5rem 0.5rem;
+}
+
+.live-orb {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 9999px;
+  background: #068fff;
+  opacity: 0.5;
+  transition: transform 0.2s ease;
+}
+
+.live-orb.is-active {
+  animation: live-orb-pulse 1s ease-in-out infinite;
+}
+
+@keyframes live-orb-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+.live-recording-dot {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 9999px;
+  background: #ec4899;
+  animation: live-recording-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes live-recording-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.75);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-orb.is-active,
+  .live-recording-dot {
+    animation: none;
+  }
+}

@@ -21,4 +21,10 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      // Forwards to the Express server in server/ during local dev.
+      "/api": "http://localhost:4001",
+    },
+  },
 })

@@ -1,13 +1,14 @@
 import { MyContext } from "@/MyContext";
  import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "firebase/firestore"; 
  
-import { GoogleGenAI, type Part } from "@google/genai";
+import type { Part } from "@google/genai";
 import { useContext, useEffect, useState} from "react";
 import { db } from "@/firebase";
 import { useParams } from "react-router-dom";
 import { useVoiceNote } from "@/hooks/use-voice-note";
 import LiveVoice from "@/components/live/LiveVoice";
 import { blobToBase64 } from "@/lib/audio";
+import { sendChatMessage } from "@/lib/api";
 import { SYSTEM_INSTRUCTION, VOICE_NOTE_PROMPT } from "@/lib/prompts";
 import "@/components/live/live.css";
 
@@ -79,9 +80,6 @@ const Footer = () => {
   
 
 
-const apiKey = import.meta.env.VITE_API_KEY;
-const ai = new GoogleGenAI({ apiKey: apiKey });
-
 /**
  * One path for every turn. Text sends a plain string, a voice note sends the
  * clip plus a prompt asking for the reply and a transcript.
@@ -112,17 +110,12 @@ async function sendTurn(parts: string | Part[], userText: string | null) {
       parts: [{ text: msg.text }]
     }));
 
-    const chat = ai.chats.create({
-        model: "gemini-2.5-flash", // Updated model name
-         config: {
-          systemInstruction: SYSTEM_INSTRUCTION
-        },
+    // 3. Get AI Response (via our server, so the API key stays there)
+    const raw = await sendChatMessage({
       history: formattedHistory,
+      message: parts,
+      systemInstruction: SYSTEM_INSTRUCTION,
     });
-
-    // 3. Get AI Response
-    const result = await chat.sendMessage({message: parts,});
-    const raw = result.text ?? "";
 
     console.log("AI Raw Response:", raw);
 

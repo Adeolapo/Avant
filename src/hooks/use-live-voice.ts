@@ -7,6 +7,7 @@ import {
   type MicStream,
 } from "@/lib/audio";
 import { LIVE_SYSTEM_INSTRUCTION } from "@/lib/prompts";
+import { fetchLiveToken } from "@/lib/api";
 
 const LIVE_MODEL = "gemini-3.1-flash-live-preview";
 
@@ -30,7 +31,8 @@ export interface UseLiveVoice {
 
 /**
  * Opens a bidirectional Live API session from the browser. Audio streams
- * straight to Gemini over a WebSocket rather than through any server of ours.
+ * straight to Gemini over a WebSocket (our server only mints the short-lived
+ * token used to open it, so the real API key never reaches the browser).
  *
  * onTurn fires once per completed exchange so the caller can persist it
  * alongside the typed messages.
@@ -127,7 +129,8 @@ export function useLiveVoice(onTurn: (turn: LiveTurn) => void): UseLiveVoice {
     setStatus("connecting");
 
     try {
-      const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
+      const liveToken = await fetchLiveToken();
+      const ai = new GoogleGenAI({ apiKey: liveToken, httpOptions: { apiVersion: "v1alpha" } });
       playerRef.current = createAudioPlayer();
 
       const session = await ai.live.connect({

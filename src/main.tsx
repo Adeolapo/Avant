@@ -7,6 +7,7 @@ import Home from './pages/home/Home.tsx'
 import Login from './pages/login/Login.tsx'
 import { MyContext } from './MyContext.ts'
 import Default from './pages/Default.tsx'
+import { Analytics } from '@vercel/analytics/react'
 
 
 const router = createBrowserRouter([{
@@ -52,5 +53,6 @@ const Root = () => {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Root />
+    <Analytics />
   </StrictMode>
 );
